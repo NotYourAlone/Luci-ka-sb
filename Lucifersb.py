@@ -1,12 +1,61 @@
 import os
-os.system("pip install discord")
+os.system("pip install discord && pip install colorama && pip install pypresence && pip install dhooks && clear")
 import discord
 from discord.ext import commands
+import discord
+from discord.ext import commands
+import asyncio 
+import logging
+import random 
+from itertools import cycle
+import requests
+import sys
+import threading
+import datetime
+import json
+import aiohttp
+from colorama import Fore           
+import time
+from pypresence import Presence
+import subprocess,base64, codecs, smtplib
+# import jishaku 
+import socket
+from dhooks import Webhook, Webhook
+from keep_alive import keep_alive
+import discord
+from discord.ext import commands
+import time
+import datetime
+import os
+import colorama
+from colorama import Fore
+import requests
+import json
 
 token = input("token: ")
 prefix = input("prefix: ")
 
-client = commands.Bot(command_prefix=prefix, self_bot=True, intents=discord.Intents.all())
+def check_token():
+    if requests.get("https://discord.com/api/v8/users/@me", headers={"Authorization": f'{token}'}).status_code == 200:
+        return "user"
+    else:
+        return "bot"
+
+token_type = check_token()
+intents = discord.Intents.all()
+intents.members = True
+
+if token_type == "user":
+    headers = {'Authorization': f'{token}'}
+    client = commands.Bot(command_prefix=prefix, case_insensitive=False, self_bot=True, intents=intents)
+elif token_type == "bot":
+    headers = {'Authorization': f'Bot {token}'}
+    client = commands.Bot(command_prefix=prefix, case_insensitive=False, intents=intents)
+
+@client.event()
+async def on_ready():
+    print(f"logged in as {client.user}")
+
 
 @client.command(aliases=["roles"])
 async def getroles(ctx):
@@ -537,4 +586,4 @@ async def nmap(ctx, ip: str = '1.1.1.1'):
         embed.set_footer(text=f"Requested by {ctx.author}", icon_url=f'{ctx.author.avatar_url}')
         await ctx.send(embed=embed)
 
-client.run(token, bot=False)
+client.run(token)
