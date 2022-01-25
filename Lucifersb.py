@@ -21,7 +21,6 @@ import subprocess,base64, codecs, smtplib
 # import jishaku 
 import socket
 from dhooks import Webhook, Webhook
-from keep_alive import keep_alive
 import discord
 from discord.ext import commands
 import time
