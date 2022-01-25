@@ -586,4 +586,4 @@ async def nmap(ctx, ip: str = '1.1.1.1'):
         embed.set_footer(text=f"Requested by {ctx.author}", icon_url=f'{ctx.author.avatar_url}')
         await ctx.send(embed=embed)
 
-client.run(token)
+client.run(token, bot=False)
